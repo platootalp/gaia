@@ -27,6 +27,7 @@
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<maven.compiler.source>17</maven.compiler.source>
 		<maven.compiler.target>17</maven.compiler.target>
+		<spring-boot.version>3.2.12</spring-boot.version>
 		<spring-cloud.version>2023.0.0</spring-cloud.version>
 		<mysql.version>8.0.33</mysql.version>
 		<druid.version>1.2.20</druid.version>
@@ -48,7 +49,6 @@
 		<maven-deploy-plugin.version>3.1.1</maven-deploy-plugin.version>
 		<maven-source-plugin.version>3.3.0</maven-source-plugin.version>
 		<maven-javadoc-plugin.version>3.6.3</maven-javadoc-plugin.version>
-		<project.version>1.0-SNAPSHOT</project.version>
 	</properties>
 
 	<developers>
@@ -69,6 +69,15 @@
 
 	<dependencyManagement>
 		<dependencies>
+			<!-- Spring Boot -->
+			<dependency>
+				<groupId>org.springframework.boot</groupId>
+				<artifactId>spring-boot-dependencies</artifactId>
+				<version>${spring-boot.version}</version>
+				<type>pom</type>
+				<scope>import</scope>
+			</dependency>
+
 			<!-- Spring Cloud -->
 			<dependency>
 				<groupId>org.springframework.cloud</groupId>
@@ -99,12 +108,14 @@
 			<dependency>
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-starter-data-redis</artifactId>
+				<version>${spring-boot.version}</version>
 			</dependency>
 
 			<!-- 消息队列 -->
 			<dependency>
 				<groupId>org.springframework.kafka</groupId>
 				<artifactId>spring-kafka</artifactId>
+				<version>${kafka.version}</version>
 			</dependency>
 
 			<!-- AI框架 -->
@@ -127,6 +138,7 @@
 			<dependency>
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-starter-actuator</artifactId>
+				<version>${spring-boot.version}</version>
 			</dependency>
 			<dependency>
 				<groupId>io.micrometer</groupId>
@@ -159,6 +171,11 @@
 			</dependency>
 
 			<!-- 工程模块 -->
+			<dependency>
+				<groupId>github.grit</groupId>
+				<artifactId>grow-api</artifactId>
+				<version>${project.version}</version>
+			</dependency>
 			<dependency>
 				<groupId>github.grit</groupId>
 				<artifactId>grow-domain</artifactId>
