@@ -15,7 +15,11 @@
 	<packaging>pom</packaging>
 
 	<modules>
-
+		<module>grow-api</module>
+		<module>grow-application</module>
+		<module>grow-domain</module>
+		<module>grow-infrastructure</module>
+		<module>grow-interfaces</module>
 	</modules>
 
 	<properties>
@@ -44,6 +48,7 @@
 		<maven-deploy-plugin.version>3.1.1</maven-deploy-plugin.version>
 		<maven-source-plugin.version>3.3.0</maven-source-plugin.version>
 		<maven-javadoc-plugin.version>3.6.3</maven-javadoc-plugin.version>
+		<project.version>1.0-SNAPSHOT</project.version>
 	</properties>
 
 	<developers>
@@ -154,31 +159,26 @@
 			</dependency>
 
 			<!-- 工程模块 -->
-			<!--			<dependency>-->
-			<!--				<groupId>github.grit</groupId>-->
-			<!--				<artifactId>ddd-domain</artifactId>-->
-			<!--				<version>${project.version}</version>-->
-			<!--			</dependency>-->
-			<!--			<dependency>-->
-			<!--				<groupId>github.grit</groupId>-->
-			<!--				<artifactId>ddd-infrastructure</artifactId>-->
-			<!--				<version>${project.version}</version>-->
-			<!--			</dependency>-->
-			<!--			<dependency>-->
-			<!--				<groupId>github.grit</groupId>-->
-			<!--				<artifactId>ddd-types</artifactId>-->
-			<!--				<version>${project.version}</version>-->
-			<!--			</dependency>-->
-			<!--			<dependency>-->
-			<!--				<groupId>github.grit</groupId>-->
-			<!--				<artifactId>ddd-trigger</artifactId>-->
-			<!--				<version>${project.version}</version>-->
-			<!--			</dependency>-->
-			<!--			<dependency>-->
-			<!--				<groupId>github.grit</groupId>-->
-			<!--				<artifactId>ddd-api</artifactId>-->
-			<!--				<version>${project.version}</version>-->
-			<!--			</dependency>-->
+			<dependency>
+				<groupId>github.grit</groupId>
+				<artifactId>grow-domain</artifactId>
+				<version>${project.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>github.grit</groupId>
+				<artifactId>grow-infrastructure</artifactId>
+				<version>${project.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>github.grit</groupId>
+				<artifactId>grow-application</artifactId>
+				<version>${project.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>github.grit</groupId>
+				<artifactId>grow-interfaces</artifactId>
+				<version>${project.version}</version>
+			</dependency>
 		</dependencies>
 	</dependencyManagement>
 
@@ -209,32 +209,6 @@
 					<groupId>org.apache.maven.plugins</groupId>
 					<artifactId>maven-deploy-plugin</artifactId>
 					<version>${maven-deploy-plugin.version}</version>
-				</plugin>
-				<plugin>
-					<groupId>org.apache.maven.plugins</groupId>
-					<artifactId>maven-source-plugin</artifactId>
-					<version>${maven-source-plugin.version}</version>
-					<executions>
-						<execution>
-							<id>attach-sources</id>
-							<goals>
-								<goal>jar-no-fork</goal>
-							</goals>
-						</execution>
-					</executions>
-				</plugin>
-				<plugin>
-					<groupId>org.apache.maven.plugins</groupId>
-					<artifactId>maven-javadoc-plugin</artifactId>
-					<version>${maven-javadoc-plugin.version}</version>
-					<executions>
-						<execution>
-							<id>attach-javadocs</id>
-							<goals>
-								<goal>jar</goal>
-							</goals>
-						</execution>
-					</executions>
 				</plugin>
 			</plugins>
 		</pluginManagement>
