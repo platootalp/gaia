@@ -55,24 +55,26 @@ services:
       - "9849:9849"
     environment:
       MODE: standalone
-      SPRING_DATASOURCE_PLATFORM: mysql
-      MYSQL_SERVICE_HOST: mysql
-      MYSQL_SERVICE_PORT: "3306"
-      MYSQL_SERVICE_DB_NAME: "nacos_config"
-      MYSQL_SERVICE_USER: "root"
-      MYSQL_SERVICE_PASSWORD: "root"
-      NACOS_AUTH_ENABLE: "true"
+#      SPRING_DATASOURCE_PLATFORM: mysql
+#      NACOS_DATASOURCE_PLATFORM: mysql
+#      MYSQL_SERVICE_HOST: mysql
+#      MYSQL_SERVICE_PORT: "3306"
+#      MYSQL_SERVICE_DB_NAME: "nacos_config"
+#      MYSQL_SERVICE_USER: "root"
+#      MYSQL_SERVICE_PASSWORD: "root"
       JVM_XMS: 512m
       JVM_XMX: 512m
+      JVM_XMN: 256m
     volumes:
       - ./data/nacos/data:/home/nacos/data
       - ./data/nacos/logs:/home/nacos/logs
-      - ./data/nacos/conf:/home/nacos/conf
-    depends_on:
-      mysql:
-        condition: service_healthy
+#      - ./data/nacos/conf:/home/nacos/config
+#    depends_on:
+#      mysql:
+#        condition: service_healthy
     networks:
       - gaia-net
+
 
   minio:
     image: minio/minio:RELEASE.2023-06-29T05-12-28Z
