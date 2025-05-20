@@ -20,6 +20,7 @@
 		<module>gaia-application</module>
 		<module>gaia-domain</module>
 		<module>gaia-infrastructure</module>
+		<module>gaia-gateway</module>
 	</modules>
 
 	<properties>
@@ -27,7 +28,6 @@
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<maven.compiler.source>17</maven.compiler.source>
 		<maven.compiler.target>17</maven.compiler.target>
-		<spring-boot.version>3.2.12</spring-boot.version>
 		<spring-cloud.version>2023.0.0</spring-cloud.version>
 		<spring-cloud-alibaba.version>2023.0.1.0</spring-cloud-alibaba.version>
 		<mysql.version>8.0.33</mysql.version>
@@ -67,15 +67,6 @@
 
 	<dependencyManagement>
 		<dependencies>
-			<!-- Spring Boot -->
-			<dependency>
-				<groupId>org.springframework.boot</groupId>
-				<artifactId>spring-boot-dependencies</artifactId>
-				<version>${spring-boot.version}</version>
-				<type>pom</type>
-				<scope>import</scope>
-			</dependency>
-
 			<!-- Spring Cloud -->
 			<dependency>
 				<groupId>org.springframework.cloud</groupId>
@@ -90,6 +81,15 @@
 				<groupId>com.alibaba.cloud</groupId>
 				<artifactId>spring-cloud-alibaba-dependencies</artifactId>
 				<version>${spring-cloud-alibaba.version}</version>
+				<type>pom</type>
+				<scope>import</scope>
+			</dependency>
+
+			<!-- AI框架 -->
+			<dependency>
+				<groupId>dev.langchain4j</groupId>
+				<artifactId>langchain4j-bom</artifactId>
+				<version>${langchain4j.version}</version>
 				<type>pom</type>
 				<scope>import</scope>
 			</dependency>
@@ -111,22 +111,6 @@
 				<version>${mybatis-plus.version}</version>
 			</dependency>
 
-			<!-- 缓存相关 -->
-<!--			<dependency>-->
-<!--				<groupId>org.springframework.kafka</groupId>-->
-<!--				<artifactId>spring-kafka</artifactId>-->
-<!--				<version>${kafka.version}</version>-->
-<!--			</dependency>-->
-
-			<!-- AI框架 -->
-			<dependency>
-				<groupId>dev.langchain4j</groupId>
-				<artifactId>langchain4j-bom</artifactId>
-				<version>${langchain4j.version}</version>
-				<type>pom</type>
-				<scope>import</scope>
-			</dependency>
-
 			<!-- 文件存储 -->
 			<dependency>
 				<groupId>io.minio</groupId>
@@ -135,11 +119,6 @@
 			</dependency>
 
 			<!-- 日志和监控 -->
-			<dependency>
-				<groupId>org.springframework.boot</groupId>
-				<artifactId>spring-boot-starter-actuator</artifactId>
-				<version>${spring-boot.version}</version>
-			</dependency>
 			<dependency>
 				<groupId>io.micrometer</groupId>
 				<artifactId>micrometer-registry-prometheus</artifactId>
@@ -188,12 +167,12 @@
 			</dependency>
 			<dependency>
 				<groupId>github.grit</groupId>
-				<artifactId>grow-application</artifactId>
+				<artifactId>gaia-application</artifactId>
 				<version>${project.version}</version>
 			</dependency>
 			<dependency>
 				<groupId>github.grit</groupId>
-				<artifactId>grow-interfaces</artifactId>
+				<artifactId>gaia-interfaces</artifactId>
 				<version>${project.version}</version>
 			</dependency>
 		</dependencies>

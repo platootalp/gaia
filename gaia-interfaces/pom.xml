@@ -19,17 +19,14 @@
         <dependency>
             <groupId>github.grit</groupId>
             <artifactId>gaia-application</artifactId>
-            <version>${project.version}</version>
         </dependency>
         <dependency>
             <groupId>github.grit</groupId>
             <artifactId>gaia-domain</artifactId>
-            <version>${project.version}</version>
         </dependency>
         <dependency>
             <groupId>github.grit</groupId>
             <artifactId>gaia-infrastructure</artifactId>
-            <version>${project.version}</version>
         </dependency>
 
         <!-- Spring Cloud Alibaba -->

@@ -111,7 +111,64 @@ mvn spring-boot:run
 2. 部署步骤
 - 打包：`mvn clean package`
 - 运行：`java -jar target/gaia.jar`
-- Docker部署：`docker-compose up -d`
+- Docker部署：
+
+### Docker部署详细说明
+项目提供了完整的Docker Compose配置，可以一键部署所有必要的服务组件。
+
+#### 前置条件
+- 安装Docker和Docker Compose
+- 至少4GB内存和10GB磁盘空间
+
+#### 部署步骤
+
+1. 构建应用镜像
+```bash
+# 打包应用
+mvn clean package -DskipTests
+
+# 构建Docker镜像
+docker build -t gaia-app:latest -f Dockerfile .
+```
+
+2. 创建必要的配置目录
+```bash
+mkdir -p config
+```
+
+3. 启动所有服务
+```bash
+docker-compose up -d
+```
+
+4. 查看服务状态
+```bash
+docker-compose ps
+```
+
+5. 访问各个服务
+- 应用服务: http://localhost:8080
+- Nacos控制台: http://localhost:8848/nacos (用户名/密码: nacos/nacos)
+- Sentinel控制台: http://localhost:8858
+- Minio控制台: http://localhost:9001 (用户名/密码: minioadmin/minioadmin)
+- Prometheus: http://localhost:9090
+- Grafana: http://localhost:3000 (用户名/密码: admin/admin)
+- SkyWalking UI: http://localhost:8090
+
+6. 停止服务
+```bash
+docker-compose down
+```
+
+7. 清理数据卷（慎用，会删除所有数据）
+```bash
+docker-compose down -v
+```
+
+#### 注意事项
+- 首次启动时，Nacos需要初始化数据库，可能需要等待一段时间
+- 各服务启动顺序已通过depends_on配置，确保依赖关系正确
+- 生产环境部署时，建议修改默认密码并配置持久化存储路径
 
 ## 监控和维护
 1. 系统监控
