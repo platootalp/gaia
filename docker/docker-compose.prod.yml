@@ -1,0 +1,75 @@
+volumes:
+  mysql_data:
+  redis_data:
+  nacos_data:
+  minio_data:
+  prometheus_data:
+  grafana_data:
+  elasticsearch_data:
+
+services:
+
+  mysql:
+    restart: always
+    volumes:
+      - mysql_data:/var/lib/mysql
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost", "-uroot", "-proot"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+
+  redis:
+    restart: always
+    volumes:
+      - redis_data:/data
+    healthcheck:
+      test: [ "CMD", "redis-cli", "-a", "yourStrongPass", "ping" ]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+
+  nacos:
+    restart: always
+    volumes:
+      - nacos_data:/home/nacos/data
+
+  sentinel:
+    restart: always
+
+  minio:
+    restart: always
+    volumes:
+      - minio_data:/data
+    healthcheck:
+      test: [ "CMD", "curl", "-f", "http://localhost:9000/minio/health/live" ]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+
+  prometheus:
+    restart: always
+    volumes:
+      - ./config/prometheus.yml:/etc/prometheus/prometheus.yml
+      - prometheus_data:/prometheus
+
+  grafana:
+    restart: always
+    volumes:
+      - grafana_data:/var/lib/grafana
+
+  elasticsearch:
+    restart: always
+    volumes:
+      - elasticsearch_data:/usr/share/elasticsearch/data
+    healthcheck:
+      test: [ "CMD", "curl", "-f", "http://localhost:9200" ]
+      interval: 10s
+      timeout: 10s
+      retries: 15
+
+  skywalking-oap:
+    restart: always
+
+  skywalking-ui:
+    restart: always
