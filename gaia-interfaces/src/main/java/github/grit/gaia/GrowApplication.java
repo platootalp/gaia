@@ -1,4 +1,4 @@
-package github.grit.grow;
+package github.grit.gaia;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
