@@ -9,9 +9,9 @@
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
-    <artifactId>gaia-api</artifactId>
-    <name>gaia-api</name>
-    <description>API模块，包含DTO、常量等</description>
+    <artifactId>gaia-common</artifactId>
+    <name>gaia-common</name>
+    <description>通用组件模块</description>
 
     <dependencies>
         <dependency>

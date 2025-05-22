@@ -15,12 +15,12 @@
 	<packaging>pom</packaging>
 
 	<modules>
-		<module>gaia-api</module>
+		<module>gaia-gateway</module>
+		<module>gaia-common</module>
 		<module>gaia-interfaces</module>
 		<module>gaia-application</module>
 		<module>gaia-domain</module>
 		<module>gaia-infrastructure</module>
-		<module>gaia-gateway</module>
 	</modules>
 
 	<properties>
@@ -152,7 +152,7 @@
 			<!-- 工程模块 -->
 			<dependency>
 				<groupId>github.grit</groupId>
-				<artifactId>grow-api</artifactId>
+				<artifactId>gaia-common</artifactId>
 				<version>${project.version}</version>
 			</dependency>
 			<dependency>

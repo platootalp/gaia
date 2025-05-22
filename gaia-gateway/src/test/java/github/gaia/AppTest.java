@@ -1,4 +1,4 @@
-package github.grit;
+package github.gaia;
 
 import junit.framework.Test;
 import junit.framework.TestCase;
