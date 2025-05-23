@@ -11,7 +11,7 @@ services:
     container_name: gaia-mysql
     restart: always
     ports:
-      - "3307:3306"
+      - "3306:3306"
     environment:
       MYSQL_ROOT_PASSWORD: "root"
       MYSQL_DATABASE: "nacos_config"
@@ -21,7 +21,7 @@ services:
       - ./data/mysql/logs:/var/log/mysql
     command: --character-set-server=utf8mb4 --collation-server=utf8mb4_unicode_ci
     healthcheck:
-      test: ["CMD-SHELL", "mysqladmin ping -h localhost -uroot -proot"]
+      test: [ "CMD-SHELL", "mysqladmin ping -h localhost -uroot -proot" ]
       interval: 5s
       timeout: 5s
       retries: 10
@@ -38,7 +38,7 @@ services:
       - ./data/redis/data:/data
     command: redis-server --requirepass root
     healthcheck:
-      test: ["CMD", "redis-cli", "-a", "root", "ping"]
+      test: [ "CMD", "redis-cli", "-a", "root", "ping" ]
       interval: 5s
       timeout: 5s
       retries: 10
@@ -55,23 +55,23 @@ services:
       - "9849:9849"
     environment:
       MODE: standalone
-#      SPRING_DATASOURCE_PLATFORM: mysql
-#      NACOS_DATASOURCE_PLATFORM: mysql
-#      MYSQL_SERVICE_HOST: mysql
-#      MYSQL_SERVICE_PORT: "3306"
-#      MYSQL_SERVICE_DB_NAME: "nacos_config"
-#      MYSQL_SERVICE_USER: "root"
-#      MYSQL_SERVICE_PASSWORD: "root"
+      #      SPRING_DATASOURCE_PLATFORM: mysql
+      #      NACOS_DATASOURCE_PLATFORM: mysql
+      #      MYSQL_SERVICE_HOST: mysql
+      #      MYSQL_SERVICE_PORT: "3306"
+      #      MYSQL_SERVICE_DB_NAME: "nacos_config"
+      #      MYSQL_SERVICE_USER: "root"
+      #      MYSQL_SERVICE_PASSWORD: "root"
       JVM_XMS: 512m
       JVM_XMX: 512m
       JVM_XMN: 256m
     volumes:
       - ./data/nacos/data:/home/nacos/data
       - ./data/nacos/logs:/home/nacos/logs
-#      - ./data/nacos/conf:/home/nacos/config
-#    depends_on:
-#      mysql:
-#        condition: service_healthy
+    #      - ./data/nacos/conf:/home/nacos/config
+    #    depends_on:
+    #      mysql:
+    #        condition: service_healthy
     networks:
       - gaia-net
 
@@ -99,6 +99,53 @@ services:
     networks:
       - gaia-net
 
+  rocketmq-broker:
+    image: apache/rocketmq:5.1.4
+    container_name: gaia-rmq-broker
+    restart: always
+    ports:
+      - "9876:9876"       # NameServer 兼容端口
+      - "10909:10909"     # Broker HA
+      - "10911:10911"     # Broker 主通信端口
+    environment:
+      - JAVA_OPT_EXT=-server -Xms512m -Xmx512m -Xmn256m
+    volumes:
+      - ./data/rocketmq/store:/home/rocketmq/store
+      - ./data/rocketmq/logs:/home/rocketmq/logs
+    command: sh mqbroker -n localhost:9876 -c /home/rocketmq/conf/broker.conf
+    healthcheck:
+      test: [ "CMD-SHELL", "curl -s localhost:10911 || exit 1" ]
+      interval: 10s
+      timeout: 5s
+      retries: 10
+    networks:
+      - gaia-net
+
+  rocketmq-proxy:
+    image: apache/rocketmq-proxy:5.1.4
+    container_name: gaia-rmq-proxy
+    restart: always
+    ports:
+      - "8081:8081"
+    environment:
+      - NAMESRV_ADDR=gaia-rmq-broker:9876
+    depends_on:
+      - rocketmq-broker
+    networks:
+      - gaia-net
+
+  rocketmq-console:
+    image: styletang/rocketmq-console-ng:latest
+    container_name: gaia-rmq-console
+    restart: always
+    ports:
+      - "8180:8080"
+    environment:
+      JAVA_OPTS: "-Drocketmq.namesrv.addr=gaia-rmq-broker:9876 -Dcom.rocketmq.sendMessageWithVIPChannel=false"
+    depends_on:
+      - rocketmq-broker
+    networks:
+      - gaia-net
 
 #  prometheus:
 #    image: prom/prometheus:v2.46.0
