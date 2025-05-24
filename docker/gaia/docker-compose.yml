@@ -75,7 +75,6 @@ services:
     networks:
       - gaia-net
 
-
   minio:
     image: minio/minio:RELEASE.2023-06-29T05-12-28Z
     container_name: gaia-minio
@@ -99,38 +98,45 @@ services:
     networks:
       - gaia-net
 
+  rocketmq-namesrv:
+    image: apache/rocketmq:5.1.4
+    container_name: gaia-rmq-namesrv
+    restart: always
+    ports:
+      - "9876:9876"
+    command: sh mqnamesrv
+    networks:
+      - gaia-net
+
   rocketmq-broker:
     image: apache/rocketmq:5.1.4
     container_name: gaia-rmq-broker
     restart: always
     ports:
-      - "9876:9876"       # NameServer 兼容端口
-      - "10909:10909"     # Broker HA
-      - "10911:10911"     # Broker 主通信端口
+      - "10909:10909"
+      - "10911:10911"
+      - "10912:10912"
     environment:
-      - JAVA_OPT_EXT=-server -Xms512m -Xmx512m -Xmn256m
-    volumes:
-      - ./data/rocketmq/store:/home/rocketmq/store
-      - ./data/rocketmq/logs:/home/rocketmq/logs
-    command: sh mqbroker -n localhost:9876 -c /home/rocketmq/conf/broker.conf
-    healthcheck:
-      test: [ "CMD-SHELL", "curl -s localhost:10911 || exit 1" ]
-      interval: 10s
-      timeout: 5s
-      retries: 10
+      - NAMESRV_ADDR=gaia-rmq-namesrv:9876
+    depends_on:
+      - rocketmq-namesrv
+    command: sh mqbroker -n gaia-rmq-namesrv:9876
     networks:
       - gaia-net
 
   rocketmq-proxy:
-    image: apache/rocketmq-proxy:5.1.4
+    image: apache/rocketmq:5.1.4
     container_name: gaia-rmq-proxy
     restart: always
     ports:
+      - "8080:8080"
       - "8081:8081"
     environment:
-      - NAMESRV_ADDR=gaia-rmq-broker:9876
+      - NAMESRV_ADDR=gaia-rmq-namesrv:9876
     depends_on:
+      - rocketmq-namesrv
       - rocketmq-broker
+    command: sh mqproxy -n gaia-rmq-namesrv:9876
     networks:
       - gaia-net
 
@@ -141,11 +147,39 @@ services:
     ports:
       - "8180:8080"
     environment:
-      JAVA_OPTS: "-Drocketmq.namesrv.addr=gaia-rmq-broker:9876 -Dcom.rocketmq.sendMessageWithVIPChannel=false"
+      JAVA_OPTS: "-Drocketmq.namesrv.addr=gaia-rmq-namesrv:9876 -Dcom.rocketmq.sendMessageWithVIPChannel=false"
     depends_on:
+      - rocketmq-namesrv
       - rocketmq-broker
     networks:
       - gaia-net
+
+  elasticsearch:
+    image: elasticsearch:8.10.4
+    container_name: gaia-elasticsearch
+    restart: always
+    ports:
+      - "9200:9200"
+    environment:
+      - discovery.type=single-node
+      - "ES_JAVA_OPTS=-Xms512m -Xmx512m"
+      - bootstrap.memory_lock=true
+      - TZ=Asia/Shanghai
+    ulimits:
+      memlock:
+        soft: -1
+        hard: -1
+    volumes:
+      - ./data/elasticsearch:/usr/share/elasticsearch/data
+    healthcheck:
+      test: [ "CMD-SHELL", "curl -s http://127.0.0.1:9200/_cluster/health | grep -q '\"status\":\"green\"'" ]
+      interval: 10s
+      timeout: 10s
+      retries: 15
+    networks:
+      - gaia-net
+
+
 
 #  prometheus:
 #    image: prom/prometheus:v2.46.0
@@ -209,23 +243,6 @@ services:
 #    networks:
 #      - gaia-net
 #
-#  elasticsearch:
-#    image: elasticsearch:7.17.9
-#    container_name: gaia-elasticsearch
-#    restart: always
-#    ports:
-#      - "${ELASTICSEARCH_PORT}:9200"
-#    environment:
-#      - discovery.type=single-node
-#      - "ES_JAVA_OPTS=-Xms512m -Xmx512m"
-#    volumes:
-#      - ./data/elasticsearch:/usr/share/elasticsearch/data
-#    healthcheck:
-#      test: ["CMD", "curl", "-f", "http://localhost:${ELASTICSEARCH_PORT}"]
-#      interval: 10s
-#      timeout: 10s
-#      retries: 15
-#    networks:
-#      - gaia-net
+
 
 
