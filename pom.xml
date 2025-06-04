@@ -32,16 +32,16 @@
 		<spring-cloud-alibaba.version>2023.0.1.0</spring-cloud-alibaba.version>
 		<mysql.version>8.0.33</mysql.version>
 		<druid.version>1.2.20</druid.version>
+		<mybatis-plus.version>3.5.5</mybatis-plus.version>
+		<velocity-engine.version>2.3</velocity-engine.version>
 		<hutool.version>5.8.15</hutool.version>
 		<lombok.version>1.18.30</lombok.version>
-		<mybatis-plus.version>3.5.5</mybatis-plus.version>
-		<mybatis-plus-generator.version>3.5.4</mybatis-plus-generator.version>
-		<velocity-engine.version>2.3</velocity-engine.version>
 		<langchain4j.version>1.0.0-beta2</langchain4j.version>
 		<minio.version>8.5.7</minio.version>
 		<prometheus.version>1.11.5</prometheus.version>
 		<skywalking.version>8.16.0</skywalking.version>
 		<springdoc.version>2.2.0</springdoc.version>
+		<knife4j.version>4.3.0</knife4j.version>
 		<maven-resources-plugin.version>3.3.1</maven-resources-plugin.version>
 		<maven-surefire-plugin.version>3.2.5</maven-surefire-plugin.version>
 		<maven-deploy-plugin.version>3.1.1</maven-deploy-plugin.version>
@@ -105,10 +105,28 @@
 				<artifactId>druid-spring-boot-starter</artifactId>
 				<version>${druid.version}</version>
 			</dependency>
+
+			<!-- ORM框架 -->
 			<dependency>
 				<groupId>com.baomidou</groupId>
 				<artifactId>mybatis-plus-boot-starter</artifactId>
 				<version>${mybatis-plus.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>com.baomidou</groupId>
+				<artifactId>mybatis-plus-spring-boot3-starter</artifactId>
+				<version>${mybatis-plus.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>com.baomidou</groupId>
+				<artifactId>mybatis-plus-generator</artifactId>
+				<version>${mybatis-plus.version}</version>
+			</dependency>
+			<!--velocity模板-->
+			<dependency>
+				<groupId>org.apache.velocity</groupId>
+				<artifactId>velocity-engine-core</artifactId>
+				<version>${velocity-engine.version}</version>
 			</dependency>
 
 			<!-- 文件存储 -->
@@ -135,6 +153,11 @@
 				<groupId>org.springdoc</groupId>
 				<artifactId>springdoc-openapi-starter-webmvc-ui</artifactId>
 				<version>${springdoc.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>com.github.xiaoymin</groupId>
+				<artifactId>knife4j-openapi3-jakarta-spring-boot-starter</artifactId>
+				<version>${knife4j.version}</version>
 			</dependency>
 
 			<!-- 工具类 -->

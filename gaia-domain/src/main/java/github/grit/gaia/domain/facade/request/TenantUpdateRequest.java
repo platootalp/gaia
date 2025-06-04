@@ -1,4 +1,4 @@
-package github.grit.gaia.interfaces.facade.request;
+package github.grit.gaia.domain.facade.request;
 
 public class TenantUpdateRequest {
 }
