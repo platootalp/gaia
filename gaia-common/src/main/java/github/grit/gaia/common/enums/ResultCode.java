@@ -1,9 +1,7 @@
-package github.grit.gaia.common.core;
+package github.grit.gaia.common.enums;
 
 import lombok.AllArgsConstructor;
-import lombok.Data;
 import lombok.Getter;
-import lombok.Setter;
 
 /**
  * @author lenovo
