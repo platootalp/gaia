@@ -8,8 +8,8 @@ import org.springframework.cloud.openfeign.EnableFeignClients;
 @SpringBootApplication
 @EnableDiscoveryClient
 @EnableFeignClients
-public class GrowApplication {
+public class GaiaApplication {
     public static void main(String[] args) {
-        SpringApplication.run(GrowApplication.class, args);
+        SpringApplication.run(GaiaApplication.class, args);
     }
 } 
