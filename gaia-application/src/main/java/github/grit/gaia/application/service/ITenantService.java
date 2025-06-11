@@ -6,7 +6,7 @@ import github.grit.gaia.domain.facade.request.TenantUpdateRequest;
 import github.grit.gaia.domain.facade.response.TenantResponse;
 import jakarta.validation.Valid;
 
-public interface TenantService {
+public interface ITenantService {
 	TenantResponse createTenant(TenantCreateRequest request);
 
 	TenantResponse getTenantById(Long tenantId);
