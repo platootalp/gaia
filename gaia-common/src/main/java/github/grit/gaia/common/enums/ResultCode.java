@@ -9,7 +9,6 @@ import lombok.Getter;
  * @description 返回结果状态码及信息
  * @date 2024/3/9 16:35
  */
-//@JsonFormat(shape = JsonFormat.Shape.OBJECT)
 @Getter
 @AllArgsConstructor
 public enum ResultCode {

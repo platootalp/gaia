@@ -1,7 +1,7 @@
 package github.grit.gaia.interfaces.rest;
 
 import cn.hutool.db.PageResult;
-import github.grit.gaia.application.service.TenantService;
+import github.grit.gaia.application.service.ITenantService;
 import github.grit.gaia.common.core.Result;
 import github.grit.gaia.domain.facade.request.TenantCreateRequest;
 import github.grit.gaia.domain.facade.request.TenantUpdateRequest;
@@ -9,6 +9,7 @@ import github.grit.gaia.domain.facade.response.TenantResponse;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
+import lombok.RequiredArgsConstructor;
 
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -23,13 +24,10 @@ import org.springframework.web.bind.annotation.RestController;
 @Tag(name = "租户管理")
 @RequestMapping("/api/v1/tenant")
 @RestController
+@RequiredArgsConstructor
 public class TenantController {
 
-	private final TenantService tenantService;
-
-	public TenantController(TenantService tenantService) {
-		this.tenantService = tenantService;
-	}
+	private final ITenantService ITenantService;
 
 	@Operation(
 			summary = "创建租户",
@@ -37,31 +35,31 @@ public class TenantController {
 	)
 	@PostMapping
 	public Result<TenantResponse> createTenant(@RequestBody @Valid TenantCreateRequest request) {
-		TenantResponse tenant = tenantService.createTenant(request);
+		TenantResponse tenant = ITenantService.createTenant(request);
 		return Result.success(tenant);
 	}
 
 	@GetMapping("/{tenantId}")
 	public Result<TenantResponse> getTenant(@PathVariable Long tenantId) {
-		return Result.success(tenantService.getTenantById(tenantId));
+		return Result.success(ITenantService.getTenantById(tenantId));
 	}
 
 	@PutMapping("/{tenantId}")
 	public Result<Boolean> updateTenant(@PathVariable Long tenantId,
-											   @RequestBody @Valid TenantUpdateRequest request) {
-		return Result.success(tenantService.updateTenant(tenantId, request));
+										@RequestBody @Valid TenantUpdateRequest request) {
+		return Result.success(ITenantService.updateTenant(tenantId, request));
 	}
 
 	@DeleteMapping("/{tenantId}")
 	public Result<Void> deleteTenant(@PathVariable Long tenantId) {
-		tenantService.deleteTenant(tenantId);
+		ITenantService.deleteTenant(tenantId);
 		return Result.success();
 	}
 
-	@GetMapping
+	@GetMapping("/s")
 	public Result<PageResult<TenantResponse>> listTenants(@RequestParam(defaultValue = "1") int page,
 														  @RequestParam(defaultValue = "10") int size) {
-		return Result.success(tenantService.listTenants(page, size));
+		return Result.success(ITenantService.listTenants(page, size));
 	}
 }
 
