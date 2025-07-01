@@ -22,24 +22,18 @@ CREATE TABLE gaia_tenant_subscription (
 
 CREATE TABLE gaia_account (
     id BIGINT UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY COMMENT '账号ID，自增主键',
-
     name VARCHAR(255) NOT NULL COMMENT '用户名',
     email VARCHAR(255) NOT NULL COMMENT '邮箱地址',
-
     password VARCHAR(255) DEFAULT NULL COMMENT '密码（哈希存储）',
     password_salt VARCHAR(255) DEFAULT NULL COMMENT '密码盐',
-
     avatar VARCHAR(255) DEFAULT NULL COMMENT '头像URL',
     interface_language VARCHAR(255) DEFAULT NULL COMMENT '界面语言（如zh-CN, en-US）',
     interface_theme VARCHAR(255) DEFAULT NULL COMMENT '界面主题（dark, light等）',
     timezone VARCHAR(255) DEFAULT NULL COMMENT '时区（如Asia/Shanghai）',
-
     last_login_at DATETIME DEFAULT NULL COMMENT '上次登录时间',
     last_login_ip VARCHAR(255) DEFAULT NULL COMMENT '上次登录IP',
-
     last_active_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '最近活跃时间',
-    status VARCHAR(16) NOT NULL DEFAULT 'active' COMMENT '账号状态（active=正常，disabled=禁用）',
-
+    status VARCHAR(64) NOT NULL DEFAULT 'enable' COMMENT '账号状态（enable=启用，disabled=禁用）',
     initialized_at DATETIME DEFAULT NULL COMMENT '首次初始化时间',
     created_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
     updated_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
