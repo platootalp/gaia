@@ -2,12 +2,23 @@ CREATE TABLE gaia_tenant (
     id BIGINT UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY COMMENT '租户ID，自增主键',
     name VARCHAR(255) NOT NULL COMMENT '租户名称',
     encrypt_public_key TEXT COMMENT '租户加密用的公钥，用于数据加密/解密',
-    plan VARCHAR(255) NOT NULL DEFAULT 'basic' COMMENT '租户套餐类型（basic、pro、enterprise等）',
-    status VARCHAR(255) NOT NULL DEFAULT 'normal' COMMENT '租户状态（normal=正常，disabled=禁用，expired=过期）',
+    status VARCHAR(255) NOT NULL DEFAULT 'enable' COMMENT '租户状态（enable=启用，disabled=禁用）',
     custom_config JSON COMMENT '租户自定义配置，JSON结构，支持灵活扩展',
-    created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
-    updated_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间'
+    created_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
+    updated_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间'
 ) COMMENT='租户表，记录租户基础信息';
+
+CREATE TABLE gaia_tenant_subscription (
+    id BIGINT PRIMARY KEY AUTO_INCREMENT COMMENT '订阅ID',
+    tenant_id BIGINT NOT NULL COMMENT '租户ID',
+    plan VARCHAR(64) NOT NULL COMMENT '套餐（free、pro、enterprise）',
+    start_time DATETIME NOT NULL COMMENT '生效开始时间',
+    end_time DATETIME NOT NULL COMMENT '生效结束时间',
+    status VARCHAR(64) NOT NULL DEFAULT 'active' COMMENT '订阅状态（active=生效，expired=过期，cancelled=取消）',
+    created_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
+    updated_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
+    UNIQUE KEY uk_tenant_plan (tenant_id, start_time)
+)COMMENT='租户订阅表，记录租户订阅信息';
 
 CREATE TABLE gaia_account (
     id BIGINT UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY COMMENT '账号ID，自增主键',
@@ -34,8 +45,8 @@ CREATE TABLE gaia_account (
     updated_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
 
     -- 索引设计
-    UNIQUE KEY account_email_unique (email),                          -- 邮箱唯一
-    KEY idx_account_status (status)                                  -- 状态查询
+    UNIQUE KEY account_email_unique (email),
+    KEY idx_account_status (status)
 ) COMMENT='账号表，记录用户基础信息';
 
 CREATE TABLE gaia_tenant_account (
