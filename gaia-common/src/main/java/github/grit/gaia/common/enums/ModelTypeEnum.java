@@ -7,7 +7,6 @@ import lombok.Getter;
 @AllArgsConstructor
 @Getter
 public enum ModelTypeEnum {
-
 	LLM("llm", "对话模型", "通用语言模型，支持聊天与生成"),
 	EMBEDDING("embedding", "向量生成", "用于文本向量化，如知识库索引"),
 	RERANK("rerank", "重排序", "对检索结果进行打分与排序"),
