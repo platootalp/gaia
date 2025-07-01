@@ -5,7 +5,7 @@ import lombok.Getter;
 
 @AllArgsConstructor
 @Getter
-public enum TenantPlanEnum {
+public enum SubscriptionEnum {
 	FREE("free", "免费版", "免费版"),
 	PLUS("plus", "增强版", "增强版"),
 	PRO("pro", "专业版", "专业版"),
