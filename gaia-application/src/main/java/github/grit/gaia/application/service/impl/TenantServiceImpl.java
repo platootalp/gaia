@@ -6,10 +6,15 @@ import github.grit.gaia.domain.facade.request.TenantCreateRequest;
 import github.grit.gaia.domain.facade.request.TenantUpdateRequest;
 import github.grit.gaia.domain.facade.response.TenantResponse;
 
+import github.grit.gaia.domain.repository.IGaiaTenantRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
 public class TenantServiceImpl implements ITenantService {
+
+	@Autowired
+	private IGaiaTenantRepository tenantRepository;
 
 	@Override
 	public TenantResponse createTenant(TenantCreateRequest request) {
