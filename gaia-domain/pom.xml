@@ -16,15 +16,7 @@
     <dependencies>
         <dependency>
             <groupId>github.grit</groupId>
-            <artifactId>gaia-infrastructure</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>org.projectlombok</groupId>
-            <artifactId>lombok</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>cn.hutool</groupId>
-            <artifactId>hutool-all</artifactId>
+            <artifactId>gaia-common</artifactId>
         </dependency>
     </dependencies>
 </project> 
