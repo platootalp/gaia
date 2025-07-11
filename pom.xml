@@ -30,13 +30,16 @@
 		<maven.compiler.target>17</maven.compiler.target>
 		<spring-cloud.version>2023.0.0</spring-cloud.version>
 		<spring-cloud-alibaba.version>2023.0.1.0</spring-cloud-alibaba.version>
+		<langchain4j.version>1.0.0-beta2</langchain4j.version>
 		<mysql.version>8.0.33</mysql.version>
 		<druid.version>1.2.20</druid.version>
 		<mybatis-plus.version>3.5.5</mybatis-plus.version>
 		<velocity-engine.version>2.3</velocity-engine.version>
 		<hutool.version>5.8.15</hutool.version>
 		<lombok.version>1.18.30</lombok.version>
-		<langchain4j.version>1.0.0-beta2</langchain4j.version>
+		<guava.version>31.1-jre</guava.version>
+		<fastjson2.version>2.0.52</fastjson2.version>
+		<apollo.version>2.1.0</apollo.version>
 		<minio.version>8.5.7</minio.version>
 		<prometheus.version>1.11.5</prometheus.version>
 		<skywalking.version>8.16.0</skywalking.version>
@@ -170,6 +173,24 @@
 				<groupId>org.projectlombok</groupId>
 				<artifactId>lombok</artifactId>
 				<version>${lombok.version}</version>
+			</dependency>
+			<!-- Guava 工具包 -->
+			<dependency>
+				<groupId>com.google.guava</groupId>
+				<artifactId>guava</artifactId>
+				<version>${guava.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>com.alibaba.fastjson2</groupId>
+				<artifactId>fastjson2</artifactId>
+				<version>${fastjson2.version}</version>
+			</dependency>
+
+			<!-- 配置中心 -->
+			<dependency>
+				<groupId>com.ctrip.framework.apollo</groupId>
+				<artifactId>apollo-client</artifactId>
+				<version>${apollo.version}</version>
 			</dependency>
 
 			<!-- 工程模块 -->
