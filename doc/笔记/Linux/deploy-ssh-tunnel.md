@@ -77,7 +77,7 @@ fi
 
 ```bash
 # 替换 IP 为容器所在主机的 IP（如虚拟机、宿主机）
-ssh-copy-id -i /Users/lijunyi/.ssh/linux/id_ed25519.pub -p 22 root@10.71.40.249
+ssh-copy-id -i /Users/lijunyi/.ssh/linux/id_ed25519.pub -p 22 root@remote_ip
 ```
 
 > ✅ 成功后会提示 `Number of key(s) added: 1`
@@ -208,7 +208,7 @@ mkdir -p /root/.ssh && chmod 700 /root/.ssh
 ### 4. 宿主机：注入公钥
 
 ```bash
-ssh-copy-id -i /Users/lijunyi/.ssh/linux/id_ed25519.pub -p 22 root@10.71.40.249
+ssh-copy-id -i /Users/lijunyi/.ssh/linux/id_ed25519.pub -p 22 root@remote_ip
 ```
 
 ### 5. 容器内：启动 SSH 服务
@@ -221,7 +221,7 @@ killall sshd || true
 ### 6. 本地：建立远程转发
 
 ```bash
-ssh -i /Users/lijunyi/.ssh/linux/id_ed25519 -R 0.0.0.0:9001:localhost:9000 -N -f -p 22 root@10.71.40.249
+ssh -i /Users/lijunyi/.ssh/linux/id_ed25519 -R 0.0.0.0:9001:localhost:9000 -N -f -p 22 root@remote_ip
 ```
 
 ### 7. 验证
@@ -231,7 +231,7 @@ ssh -i /Users/lijunyi/.ssh/linux/id_ed25519 -R 0.0.0.0:9001:localhost:9000 -N -f
 netstat -tulnp | grep 9001
 
 # 本地或外部
-curl http://10.71.40.249:9001
+curl http://remote_ip:port
 ```
 
 ---

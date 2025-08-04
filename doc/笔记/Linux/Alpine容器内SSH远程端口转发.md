@@ -77,7 +77,7 @@ fi
 
 ```bash
 # 替换 IP 为容器所在主机的 IP（如虚拟机、宿主机）
-ssh-copy-id -i /Users/lijunyi/.ssh/linux/id_ed25519.pub -p 22 root@10.71.40.249
+ssh-copy-id -i /Users/lijunyi/.ssh/linux/id_ed25519.pub -p 22 root@remote_ip
 ```
 
 > ✅ 成功后会提示 `Number of key(s) added: 1`
@@ -127,14 +127,14 @@ ssh -i /Users/lijunyi/.ssh/linux/id_ed25519 \
     -R 0.0.0.0:9001:localhost:9000 \
     -N -f \
     -p 22 \
-    root@10.71.40.249
+    root@remote_ip
 ```
 
 - `9001`：容器监听端口
 - `9000`：本地服务端口（如 Web 服务）
 - `-N -f`：后台静默运行，仅转发
 
-> ✅ 效果：外部访问 `http://10.71.40.249:9001` → 转发到你本地 `localhost:9000`
+> ✅ 效果：外部访问 `http://remote_ip:port` → 转发到你本地 `localhost:9000`
 
 ---
 
@@ -157,7 +157,7 @@ tcp 0 0 0.0.0.0:9001 0.0.0.0:* LISTEN 12345/sshd
 ### 从外部测试访问：
 
 ```bash
-curl http://10.71.40.249:9001
+curl http://remote_ip:port
 ```
 
 ---
@@ -208,7 +208,7 @@ mkdir -p /root/.ssh && chmod 700 /root/.ssh
 ### 4. 宿主机：注入公钥
 
 ```bash
-ssh-copy-id -i /Users/lijunyi/.ssh/linux/id_ed25519.pub -p 22 root@10.71.40.249
+ssh-copy-id -i /Users/lijunyi/.ssh/linux/id_ed25519.pub -p 22 root@remote_ip
 ```
 
 ### 5. 容器内：启动 SSH 服务
@@ -221,7 +221,7 @@ killall sshd || true
 ### 6. 本地：建立远程转发
 
 ```bash
-ssh -i /Users/lijunyi/.ssh/linux/id_ed25519 -R 0.0.0.0:9001:localhost:9000 -N -f -p 22 root@10.71.40.249
+ssh -i /Users/lijunyi/.ssh/linux/id_ed25519 -R 0.0.0.0:9001:localhost:9000 -N -f -p 22 root@remote_ip
 ```
 
 ### 7. 验证
@@ -231,9 +231,80 @@ ssh -i /Users/lijunyi/.ssh/linux/id_ed25519 -R 0.0.0.0:9001:localhost:9000 -N -f
 netstat -tulnp | grep 9001
 
 # 本地或外部
-curl http://10.71.40.249:9001
+curl http://remote_ip:port
 ```
 
+## 完整脚本
+```bash
+# 容器内
+#!/bin/bash
+
+# 显示脚本运行开始信息
+echo "开始配置 SSH 服务和端口转发..."
+
+# 1. 更新 APK 索引并安装 OpenSSH
+echo "更新 apk 索引并安装 openssh..."
+apk update && apk add openssh && ssh-keygen -A
+
+# 2. 配置 sshd_config
+echo "配置 SSH 服务配置文件..."
+cat > /etc/ssh/sshd_config << 'EOF'
+Port 22
+ListenAddress 0.0.0.0
+PasswordAuthentication no
+PubkeyAuthentication yes
+PermitRootLogin prohibit-password
+AllowTcpForwarding yes
+GatewayPorts yes
+ClientAliveInterval 60
+ClientAliveCountMax 3
+EOF
+
+# 3. 创建 .ssh 目录并设置权限
+echo "创建 /root/.ssh 目录并设置权限..."
+mkdir -p /root/.ssh && chmod 700 /root/.ssh
+
+# 4. 提示用户输入公钥
+echo "请输入公钥（如果使用默认公钥，直接按回车）："
+read user_pubkey
+if [ -z "$user_pubkey" ]; then
+  echo "未输入公钥，使用默认公钥："
+  user_pubkey="xxxxx"
+fi
+
+# 写入公钥到 /root/.ssh/authorized_keys 文件
+echo "$user_pubkey" > /root/.ssh/authorized_keys
+
+# 设置权限
+chmod 600 /root/.ssh/authorized_keys
+chown -R root:root /root/.ssh
+
+# 5. 启动 SSH 服务
+echo "启动 SSH 服务..."
+killall sshd || true
+/usr/sbin/sshd -D -e -f /etc/ssh/sshd_config &
+
+# 6. 提示用户执行远程端口转发命令
+echo "SSH 服务已启动。请在宿主机上运行以下命令进行远程端口转发："
+echo "ssh -i /path/to/your/private_key -R 0.0.0.0:9001:localhost:9000 -N -f -p 22 root@remote_ip"
+
+# 提示用户执行完命令后进行验证
+echo "请执行完远程端口转发命令后，按回车继续进行容器内的验证..."
+
+# 等待用户按回车
+read -p "按回车继续..."
+
+# 7. 容器内验证端口转发
+echo "在容器内执行以下命令验证 9001 端口是否正常监听："
+netstat -tulnp | grep 9001
+
+# 8. 宿主机或外部验证
+echo "在本地或外部，您可以使用以下命令检查端口转发是否正常工作："
+echo "curl http://remote_ip:port"
+
+# 脚本执行完成
+echo "SSH 配置和端口转发设置已完成。"
+```
 ---
 
 ## 📌 核心要点总结
