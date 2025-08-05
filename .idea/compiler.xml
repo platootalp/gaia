@@ -12,6 +12,7 @@
         <module name="gaia-gateway" />
         <module name="gaia-common" />
         <module name="gaia-infrastructure" />
+        <module name="gaia-demo" />
       </profile>
       <profile name="Annotation profile for gaia" enabled="true">
         <sourceOutputDir name="target/generated-sources/annotations" />
@@ -36,6 +37,7 @@
     <option name="ADDITIONAL_OPTIONS_OVERRIDE">
       <module name="gaia-application" options="-parameters" />
       <module name="gaia-common" options="-parameters" />
+      <module name="gaia-demo" options="-parameters" />
       <module name="gaia-domain" options="-parameters" />
       <module name="gaia-gateway" options="-parameters" />
       <module name="gaia-infrastructure" options="-parameters" />
