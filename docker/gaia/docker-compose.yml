@@ -228,7 +228,6 @@ services:
       - gaia-net
 
 
-
 #  prometheus:
 #    image: prom/prometheus:v2.46.0
 #    container_name: gaia-prometheus
