@@ -1,4 +1,4 @@
-package github.grit.gaia.config;
+package github.grit.gaia.demo.config;
 
 import jakarta.annotation.PostConstruct;
 import jakarta.annotation.PreDestroy;

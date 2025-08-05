@@ -1,6 +1,6 @@
-package github.grit.gaia;
+package github.grit.gaia.demo;
 
-import github.grit.gaia.config.LifeCycleBean;
+import github.grit.gaia.demo.config.LifeCycleBean;
 import org.junit.jupiter.api.Test;
 
 import org.springframework.beans.factory.annotation.Autowired;
