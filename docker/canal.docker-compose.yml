@@ -1,15 +1,49 @@
 version: '3.8'
 
 services:
-  canal-server:
-    image: canal/canal-server:latest
-    container_name: canal-server
-    ports:
-      - "11111:11111"  # Canal server 的端口
+  mysql:
+    image: mysql:5.7
+    container_name: mysql
     environment:
-      - CANAL_HOME=/canal
-      - CANAL_SERVER_MODE=TCP
-      - CANAL_MQ_MODE=rocketmq  # 或者使用 kafka，具体根据你的需求选择
-      - CANAL_INSTANCE_MODE=MYSQL
-    volumes:
-      - ./canal-instance:/canal-instance  # 挂载 Canal 实例配置文件
+      MYSQL_ROOT_USER: root
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: canal_manager
+    ports:
+      - "3306:3306"
+    healthcheck:
+      test: [ "CMD", "mysqladmin", "ping", "-h", "localhost" ]
+      interval: 5s
+      timeout: 10s
+      retries: 10
+
+#  canal-admin:
+#    image: canal/canal-admin:latest
+#    container_name: canal-admin
+#    ports:
+#      - "9010:8089"
+#    environment:
+#      - server.port=8089
+#      - spring.datasource.url=jdbc:mysql://mysql:3306/canal_manager?useUnicode=true
+#      - spring.datasource.username=root
+#      - spring.datasource.password=root
+#      - canal.admin.user=admin
+#      - canal.admin.passwd=admin
+#    depends_on:
+#      mysql:
+#        condition: service_healthy
+#    volumes:
+#      - ./canal-admin-config:/canal-admin/config
+#
+#  canal-server:
+#    image: canal/canal-server:latest
+#    container_name: canal-server
+#    ports:
+#      - "11111:11111"
+#    environment:
+#      - canal.admin.manager=canal-admin:8089
+#      - canal.admin.user=admin
+#      - canal.admin.passwd=admin
+#    depends_on:
+#      - canal-admin
+#    volumes:
+#      - ./canal-instance:/canal/conf
