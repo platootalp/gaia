@@ -81,6 +81,8 @@ SSH 端口转发（也称为 SSH 隧道）是一种强大的技术，允许你�
 * **命令格式：**
   ```bash
   ssh -D [bind_address:]local_socks_port user@ssh_server
+  # 在容器中建立 SSH 动态端口转发（SOCKS5 代理）
+  ssh -D 1080 root@10.102.68.67 -N -f
   ```
 * **参数解释：**
     * `[bind_address:]` (可选)： 指定本地哪个 IP 地址监听 SOCKS 代理端口。默认为 `localhost`（`127.0.0.1`）。
