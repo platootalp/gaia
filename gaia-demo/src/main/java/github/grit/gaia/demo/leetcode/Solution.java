@@ -1,38 +1,58 @@
 package github.grit.gaia.demo.leetcode;
 
-import java.util.*;
+import java.util.Arrays;
 
 public class Solution {
-    // 812. 最大三角形面积
-    public double largestTriangleArea(int[][] points) {
-        double res = 0;
-        for (int i = 0; i < points.length; i++) {
-            for (int j = i + 1; j < points.length; j++) {
-                for (int k = j + 1; k < points.length; k++) {
-                    int x1 = points[i][0], y1 = points[i][1];
-                    int x2 = points[j][0], y2 = points[j][1];
-                    int x3 = points[k][0], y3 = points[k][1];
-                    res = Math.max(res, 0.5 * Math.abs(
-                            (x2 - x1) * (y3 - y1) - (x3 - x1) * (y2 - y1))
-                    );
-                }
-            }
-        }
-        return res;
-    }
+	// 812. 最大三角形面积
+	public double largestTriangleArea(int[][] points) {
+		double res = 0;
+		for (int i = 0; i < points.length; i++) {
+			for (int j = i + 1; j < points.length; j++) {
+				for (int k = j + 1; k < points.length; k++) {
+					int x1 = points[i][0], y1 = points[i][1];
+					int x2 = points[j][0], y2 = points[j][1];
+					int x3 = points[k][0], y3 = points[k][1];
+					res = Math.max(res, 0.5 * Math.abs(
+							(x2 - x1) * (y3 - y1) - (x3 - x1) * (y2 - y1))
+					);
+				}
+			}
+		}
+		return res;
+	}
 
-    // 3689. 最大子数组总值 I
-    public long maxTotalValue(int[] nums, int k) {
-        int max = Integer.MIN_VALUE;
-        int min = Integer.MAX_VALUE;
-        for (int i = 0; i < nums.length; i++) {
-            max = Math.max(max, nums[i]);
-            min = Math.min(min, nums[i]);
-        }
-        return (long) (max - min) * k;
-    }
+	// 3689. 最大子数组总值 I
+	public long maxTotalValue(int[] nums, int k) {
+		int max = Integer.MIN_VALUE;
+		int min = Integer.MAX_VALUE;
+		for (int i = 0; i < nums.length; i++) {
+			max = Math.max(max, nums[i]);
+			min = Math.min(min, nums[i]);
+		}
+		return (long) (max - min) * k;
+	}
 
-    public static void main(String[] args) {
+	// 976. 三角形的最大周长
+	public int largestPerimeter(int[] nums) {
+		if (nums.length < 3) {
+			return 0;
+		}
+		// 贪心一下
+		int result = 0;
+		Arrays.sort(nums);
+		for (int i = nums.length - 1; i >= nums.length - 3; i--) {
+			int a = nums[i - 2];
+			int b = nums[i - 1];
+			int c = nums[i];
+			if (a + b > c) {
+				result = Math.max(result, a + b + c);
+			}
+		}
+		return result;
+	}
 
-    }
+	//
+	public static void main(String[] args) {
+
+	}
 }
