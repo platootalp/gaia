@@ -1,6 +1,7 @@
 package github.grit.gaia.demo.leetcode;
 
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.Map;
 
 public class Solution {
@@ -99,6 +100,33 @@ public class Solution {
 
         // 情况三，suf 多算了一个 nums[i-1]，或者 pre 多算了一个 nums[i-1]
         return Math.min(Math.abs(d + nums[i - 1]), Math.abs(d - nums[i - 1]));
+    }
+
+    // 2300. 咒语和药水的成功对数
+    public int[] successfulPairs(int[] spells, int[] potions, long success) {
+        Arrays.sort(potions);
+        int n = spells.length;
+
+        //
+        int[] ans = new int[n];
+        for (int i = 0; i < n; i++) {
+            ans[i] = potions.length - binarySearch(potions, spells[i], success);
+        }
+        return ans;
+    }
+
+    private int binarySearch(int[] potions, int spell, long success) {
+        int left = 0;
+        int right = potions.length - 1;
+        while (left <= right) {
+            int mid = left + (right - left) / 2;
+            if ((long) spell * potions[mid] >= success) {
+                right = mid - 1;
+            } else {
+                left = mid + 1;
+            }
+        }
+        return left;
     }
 
     public static void main(String[] args) {
