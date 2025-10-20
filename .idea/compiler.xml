@@ -7,12 +7,13 @@
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
-        <module name="gaia-domain" />
-        <module name="gaia-application" />
         <module name="gaia-gateway" />
         <module name="gaia-common" />
         <module name="gaia-infrastructure" />
         <module name="gaia-demo" />
+        <module name="gaia-domain" />
+        <module name="gaia-application" />
+        <module name="gaia-work" />
       </profile>
       <profile name="Annotation profile for gaia" enabled="true">
         <sourceOutputDir name="target/generated-sources/annotations" />
@@ -45,6 +46,7 @@
       <module name="gaia-gateway" options="-parameters" />
       <module name="gaia-infrastructure" options="-parameters" />
       <module name="gaia-interfaces" options="-parameters" />
+      <module name="gaia-work" options="-parameters" />
       <module name="grow-api" options="-parameters" />
       <module name="grow-application" options="-parameters" />
       <module name="grow-interfaces" options="-parameters" />
