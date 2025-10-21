@@ -22,6 +22,7 @@
 		<module>gaia-domain</module>
 		<module>gaia-infrastructure</module>
 		<module>gaia-demo</module>
+		<module>gaia-work</module>
 	</modules>
 
 	<properties>

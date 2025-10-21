@@ -25,3 +25,5 @@ replay_pid*
 
 # 忽略 mysql 数据文件
 docker/gaia/data/
+docs/work/
+gaia-work/
