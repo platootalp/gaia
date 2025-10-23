@@ -27,3 +27,4 @@ replay_pid*
 docker/gaia/data/
 docs/work/
 gaia-work/
+.env

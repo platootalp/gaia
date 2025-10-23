@@ -62,29 +62,22 @@
 		<dependency>
 			<groupId>org.apache.poi</groupId>
 			<artifactId>poi</artifactId>
-			<version>5.2.5</version>
+			<version>5.2.3</version>
 		</dependency>
 
 		<!-- 支持 .docx / .xlsx (OOXML) -->
 		<dependency>
 			<groupId>org.apache.poi</groupId>
 			<artifactId>poi-ooxml</artifactId>
-			<version>5.2.5</version>
+			<version>5.2.3</version>
 		</dependency>
 		<!-- 重点：补充 schemas 包，包含 CTPict、CTShape 等 XML 定义 -->
 		<dependency>
 			<groupId>org.apache.poi</groupId>
 			<artifactId>poi-ooxml-full</artifactId>
-			<version>5.2.5</version>
+			<version>5.2.3</version>
 		</dependency>
 
-		<!--		&lt;!&ndash; IOUtils 工具类 &ndash;&gt;-->
-		<!--		<dependency>-->
-		<!--			<groupId>commons-io</groupId>-->
-		<!--			<artifactId>commons-io</artifactId>-->
-		<!--			<version>2.11.0</version>-->
-		<!--		</dependency>-->
-		<!-- Docx4j Core (Apache 2.0) -->
 		<dependency>
 			<groupId>org.docx4j</groupId>
 			<artifactId>docx4j-core</artifactId>
