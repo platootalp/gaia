@@ -12,7 +12,9 @@
 	<name>gaia-work</name>
 	<description>想法的简单实现</description>
 
-
+	<modules>
+		<module>batch_upload</module>
+	</modules>
 	<dependencies>
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
