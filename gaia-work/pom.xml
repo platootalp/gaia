@@ -13,7 +13,7 @@
 	<description>想法的简单实现</description>
 
 	<modules>
-		<module>batch_upload</module>
+		<module>batch-upload</module>
 	</modules>
 	<dependencies>
 		<dependency>
