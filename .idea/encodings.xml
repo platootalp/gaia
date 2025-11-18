@@ -8,6 +8,10 @@
     <file url="file://$PROJECT_DIR$/gaia-gateway/src/main/java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/gaia-infrastructure/src/main/java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/gaia-interfaces/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/gaia-work/batch-upload/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/gaia-work/batch-upload/src/main/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/gaia-work/batch_upload/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/gaia-work/batch_upload/src/main/resources" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/gaia-work/src/main/java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/gaia-work/src/main/resources" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/grow-application/src/main/java" charset="UTF-8" />

@@ -13,7 +13,6 @@
         <module name="gaia-demo" />
         <module name="gaia-domain" />
         <module name="gaia-application" />
-        <module name="gaia-work" />
       </profile>
       <profile name="Annotation profile for gaia" enabled="true">
         <sourceOutputDir name="target/generated-sources/annotations" />
@@ -28,6 +27,12 @@
           <entry name="$MAVEN_REPOSITORY$/org/mapstruct/mapstruct/1.5.5.Final/mapstruct-1.5.5.Final.jar" />
         </processorPath>
         <module name="gaia-interfaces" />
+      </profile>
+      <profile name="Annotation profile for batch-upload" enabled="true">
+        <sourceOutputDir name="../batch_upload/target/generated-sources/annotations" />
+        <sourceTestOutputDir name="../batch_upload/target/generated-test-sources/test-annotations" />
+        <outputRelativeToContentRoot value="true" />
+        <module name="batch-upload" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
