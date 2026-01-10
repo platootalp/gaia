@@ -28,14 +28,9 @@
         </processorPath>
         <module name="gaia-interfaces" />
       </profile>
-      <profile name="Annotation profile for batch-upload" enabled="true">
-        <sourceOutputDir name="../batch_upload/target/generated-sources/annotations" />
-        <sourceTestOutputDir name="../batch_upload/target/generated-test-sources/test-annotations" />
-        <outputRelativeToContentRoot value="true" />
-        <module name="batch-upload" />
-      </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
+      <module name="batch-upload" target="1.8" />
       <module name="gaia-api" target="17" />
       <module name="grow-api" target="17" />
       <module name="grow-application" target="17" />
