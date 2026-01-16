@@ -1,205 +1,82 @@
-# Gaia（Grit-Aware Intelligent Architecture） - 基于DDD的大模型应用平台
+# Gaia 项目模板集合
 
-## 项目简介
-Gaia是一个基于DDD（领域驱动设计）架构的Spring Cloud微服务项目，旨在提供一个可扩展、可维护的企业级应用开发框架。本项目采用最新的Spring Cloud技术栈，结合DDD最佳实践，为企业级应用开发提供完整的解决方案。
+本仓库包含多个企业级项目模板，旨在为不同类型的应用开发提供标准化的项目结构和最佳实践。
 
-## 技术架构
-- 基础框架：Spring Boot 3.2.12
-- 微服务框架：Spring Cloud 2023.0.0
-- 服务治理：Spring Cloud Alibaba 2023.0.1.0
-- 数据库：MySQL 8.0
-- 连接池：Druid 1.2.20
-- 开发语言：Java 17
-- 工具库：Hutool 5.8.15
-- 监控：Prometheus + SkyWalking
-- 文档：SpringDoc 2.2.0
+## 项目模板列表
 
-## 项目结构
-```
-gaia/
-├── gaia-api              # API模块，包含对外接口定义
-├── gaia-interfaces       # 接口层，处理外部请求
-├── gaia-application      # 应用层，处理业务用例
-├── gaia-domain          # 领域层，包含核心业务逻辑
-└── gaia-infrastructure  # 基础设施层，提供技术支持
-```
+### 1. gaia-backend-ddd - 后端DDD企业级项目模板
 
-## 模块说明
+基于领域驱动设计(DDD)的Java后端项目模板，采用Maven多模块架构。
 
-### gaia-api
-- 定义对外接口
-- 包含DTO对象
-- 定义API文档
-- 提供接口版本控制
+**技术栈：**
 
-### gaia-interfaces
-- 处理外部请求
-- 实现REST API接口
-- 处理请求参数验证
-- 实现服务间通信
-- 集成安全认证
-- 提供API文档
+- Java
+- Spring Boot
+- MyBatis-Plus
+- Maven多模块
 
-### gaia-application
-- 实现业务用例
-- 协调领域对象
-- 处理事务
-- 实现应用服务
-- 处理业务规则
+**模块结构：**
 
-### gaia-domain
-- 定义领域模型
-- 实现领域服务
-- 定义领域事件
-- 实现领域规则
-- 维护领域完整性
+- `gaia-interfaces` - 接口层（API控制器）
+- `gaia-application` - 应用服务层
+- `gaia-domain` - 领域层（核心业务逻辑）
+- `gaia-infrastructure` - 基础设施层（数据持久化、外部服务）
+- `gaia-gateway` - 网关服务
+- `gaia-common` - 公共组件
+- `gaia-demo` - 示例代码
 
-### gaia-infrastructure
-- 实现数据持久化
-- 提供缓存支持
-- 实现消息队列
-- 提供外部服务集成
-- 处理技术细节
+**详细文档：** 请查看 [gaia-backend-ddd/README.md](./gaia-backend-ddd/README.md)
 
-## 开发环境要求
-- JDK 17+
-- Maven 3.8+
-- MySQL 8.0+
-- IDE推荐：IntelliJ IDEA
+**部署配置：** 请查看 [gaia-backend-ddd/docker/](./gaia-backend-ddd/docker/)
 
-## 快速开始
-1. 克隆项目
-```bash
-git clone [项目地址]
-```
+---
 
-2. 配置数据库
-- 创建数据库
-- 修改application.yml中的数据库配置
+### 2. gaia-agent - Java AI Agent 项目模板
 
-3. 启动项目
-```bash
-mvn clean install
-mvn spring-boot:run
-```
+基于 Spring Boot + spring-ai-alibaba 的 Java AI Agent 平台模板，专为 AI Agent 应用开发设计。
 
-## 项目规范
-1. 代码规范
-- 遵循阿里巴巴Java开发手册
-- 使用统一的代码格式化工具
-- 保持代码注释完整
-- 遵循DDD设计原则
+**技术栈：**
 
-2. 提交规范
-- 遵循Git Flow工作流
-- 提交信息需要清晰描述改动内容
-- 遵循语义化版本规范
+- Spring Boot 3.2.0
+- spring-ai-alibaba 1.0.0-M2（通义千问）
+- MyBatis-Plus 3.5.5
+- Redis + RocketMQ
 
-3. 文档规范
-- 及时更新接口文档
-- 保持README文档的准确性
-- 记录重要的技术决策
-- 维护API文档
+**核心特性：**
 
-## 部署说明
-1. 环境要求
-- JDK 17+
-- MySQL 8.0+
-- 足够的内存和磁盘空间
-- 支持Docker环境
+- 支持 ReAct、Plan-Execute 等多种 Agent 模式
+- 完整的工具系统（Tool Registry & Execution）
+- 对话记忆管理（Conversation Memory）
+- 工作流编排引擎（Workflow Engine）
+- 提示词模板系统（Prompt Template）
 
-2. 部署步骤
-- 打包：`mvn clean package`
-- 运行：`java -jar target/gaia.jar`
-- Docker部署：
+**项目结构：**
 
-### Docker部署详细说明
-项目提供了完整的Docker Compose配置，可以一键部署所有必要的服务组件。
+- `controller` - REST API 控制器
+- `service` - 业务服务层
+- `core` - Agent 核心组件（Agent、Tool、Memory、Workflow）
+- `infra` - 基础设施（AI客户端、持久化、缓存、消息队列）
+- `common` - 通用组件
 
-#### 前置条件
-- 安装Docker和Docker Compose
-- 至少4GB内存和10GB磁盘空间
+**详细文档：** 请查看 [gaia-ai-agent-java/README.md](gaia-agent/README.md)
 
-#### 部署步骤
+---
 
-1. 构建应用镜像
-```bash
-# 打包应用
-mvn clean package -DskipTests
+## 使用说明
 
-# 构建Docker镜像
-docker build -t gaia-app:latest -f Dockerfile .
-```
-
-2. 创建必要的配置目录
-```bash
-mkdir -p config
-```
-
-3. 启动所有服务
-```bash
-docker-compose up -d
-```
-
-4. 查看服务状态
-```bash
-docker-compose ps
-```
-
-5. 访问各个服务
-- 应用服务: http://localhost:8080
-- Nacos控制台: http://localhost:8848/nacos (用户名/密码: nacos/nacos)
-- Sentinel控制台: http://localhost:8858
-- Minio控制台: http://localhost:9001 (用户名/密码: minioadmin/minioadmin)
-- Prometheus: http://localhost:9090
-- Grafana: http://localhost:3000 (用户名/密码: admin/admin)
-- SkyWalking UI: http://localhost:8090
-
-6. 停止服务
-```bash
-docker-compose down
-```
-
-7. 清理数据卷（慎用，会删除所有数据）
-```bash
-docker-compose down -v
-```
-
-#### 注意事项
-- 首次启动时，Nacos需要初始化数据库，可能需要等待一段时间
-- 各服务启动顺序已通过depends_on配置，确保依赖关系正确
-- 生产环境部署时，建议修改默认密码并配置持久化存储路径
-
-## 监控和维护
-1. 系统监控
-- 使用Spring Boot Actuator
-- 集成Prometheus监控
-- 配置SkyWalking链路追踪
-- 配置日志收集
-
-2. 性能优化
-- 定期进行性能测试
-- 优化数据库查询
-- 合理使用缓存
-- 监控系统资源使用
+1. 选择适合你需求的项目模板
+2. 复制对应的模板目录到你的工作空间
+3. 根据项目模板中的 README.md 进行配置和开发
+4. 根据实际业务需求调整模块结构
 
 ## 贡献指南
-1. Fork项目
-2. 创建特性分支
-3. 提交改动
-4. 发起Pull Request
 
-## 版本历史
-- v1.0.0：初始版本
-  - 基础架构搭建
-  - 核心功能实现
-  - 微服务框架集成
+欢迎提交新的项目模板或改进现有模板。请确保：
+
+- 遵循相应的架构模式和最佳实践
+- 提供完整的文档说明
+- 包含必要的配置示例
 
 ## 许可证
-本项目采用 Apache License 2.0 许可证，详见 [LICENSE](LICENSE) 文件。
 
-## 联系方式
-- 项目维护者：platootalp
-- 邮箱：platootalp2002@gmail.com
-- 组织：grit
-- 组织地址：https://github.com/platootalp
+请查看 [LICENSE](./LICENSE) 文件了解详情。

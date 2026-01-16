@@ -1,0 +1,57 @@
+server:
+  port: 8080
+
+spring:
+  application:
+    name: gaia-ai-agent-java
+  
+  # AI 配置
+  ai:
+    qwen:
+      api-key: ${QWEN_API_KEY:your-api-key-here}
+      model: qwen-plus
+      temperature: 0.7
+      max-tokens: 2000
+      top-p: 0.9
+  
+  # 数据源配置
+  datasource:
+    url: jdbc:mysql://localhost:3306/ai_agent?useUnicode=true&characterEncoding=utf8&serverTimezone=Asia/Shanghai
+    username: root
+    password: ${DB_PASSWORD:root}
+    driver-class-name: com.mysql.cj.jdbc.Driver
+  
+  # Redis 配置
+  redis:
+    host: localhost
+    port: 6379
+    password: ${REDIS_PASSWORD:}
+    database: 0
+    timeout: 3000ms
+    lettuce:
+      pool:
+        max-active: 8
+        max-idle: 8
+        min-idle: 0
+        max-wait: -1ms
+
+# MyBatis Plus 配置
+mybatis-plus:
+  configuration:
+    map-underscore-to-camel-case: true
+    log-impl: org.apache.ibatis.logging.slf4j.Slf4jImpl
+  mapper-locations: classpath*:/mapper/**/*.xml
+
+# RocketMQ 配置
+rocketmq:
+  name-server: localhost:9876
+  producer:
+    group: ai-agent-producer
+
+# 日志配置
+logging:
+  level:
+    root: INFO
+    github.grit.gaia.aiagent: DEBUG
+  pattern:
+    console: "%d{yyyy-MM-dd HH:mm:ss.SSS} [%thread] %-5level %logger{36} - %msg%n"
