@@ -13,7 +13,7 @@
 
 ## 技术栈
 
-- **框架**：Spring Boot 3.2.0
+- **框架**：Spring Boot 3.2.12
 - **AI 框架**：spring-ai-alibaba 1.0.0-M2
 - **数据库**：MySQL 8.0 + MyBatis-Plus 3.5.5
 - **缓存**：Redis

@@ -1,6 +1,6 @@
-package github.grit.gaia.agent.core.agent;
+package github.grit.gaia.agent.infra.ai.agent;
 
-import github.grit.gaia.agent.core.tool.ToolRegistry;
+import github.grit.gaia.agent.infra.ai.tool.ToolRegistry;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;

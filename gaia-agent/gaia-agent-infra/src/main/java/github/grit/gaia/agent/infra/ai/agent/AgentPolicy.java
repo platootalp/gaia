@@ -1,4 +1,4 @@
-package github.grit.gaia.agent.core.agent;
+package github.grit.gaia.agent.infra.ai.agent;
 
 import lombok.Builder;
 import lombok.Data;

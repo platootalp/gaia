@@ -2,12 +2,12 @@ package github.grit.gaia.agent.service.agent;
 
 import github.grit.gaia.agent.controller.dto.request.AgentExecuteRequest;
 import github.grit.gaia.agent.controller.dto.response.AgentExecuteResponse;
-import github.grit.gaia.agent.core.agent.Agent;
-import github.grit.gaia.agent.core.agent.AgentContext;
-import github.grit.gaia.agent.core.agent.AgentExecutor;
-import github.grit.gaia.agent.core.agent.ReActAgent;
-import github.grit.gaia.agent.core.memory.ConversationMemory;
-import github.grit.gaia.agent.core.tool.ToolRegistry;
+import github.grit.gaia.agent.infra.ai.agent.Agent;
+import github.grit.gaia.agent.infra.ai.agent.AgentContext;
+import github.grit.gaia.agent.infra.ai.agent.AgentExecutor;
+import github.grit.gaia.agent.infra.ai.agent.ReActAgent;
+import github.grit.gaia.agent.infra.ai.memory.ConversationMemory;
+import github.grit.gaia.agent.infra.ai.tool.ToolRegistry;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
