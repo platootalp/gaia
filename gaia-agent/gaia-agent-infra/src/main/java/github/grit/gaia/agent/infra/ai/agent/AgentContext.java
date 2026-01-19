@@ -1,6 +1,6 @@
-package github.grit.gaia.agent.core.agent;
+package github.grit.gaia.agent.infra.ai.agent;
 
-import github.grit.gaia.agent.core.memory.Memory;
+import github.grit.gaia.agent.infra.ai.memory.Memory;
 import lombok.Builder;
 import lombok.Data;
 import java.util.Map;

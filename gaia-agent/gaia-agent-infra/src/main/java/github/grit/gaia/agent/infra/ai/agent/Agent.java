@@ -1,8 +1,7 @@
-package github.grit.gaia.agent.core.agent;
+package github.grit.gaia.agent.infra.ai.agent;
 
 import lombok.Data;
 import java.util.List;
-import java.util.Map;
 
 /**
  * Agent 核心接口

@@ -1,4 +1,4 @@
-package github.grit.gaia.agent.core.prompt;
+package github.grit.gaia.agent.infra.ai.prompt;
 
 import lombok.Data;
 import java.util.Map;

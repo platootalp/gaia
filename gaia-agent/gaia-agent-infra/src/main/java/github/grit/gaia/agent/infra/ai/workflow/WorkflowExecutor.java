@@ -1,4 +1,4 @@
-package github.grit.gaia.agent.core.workflow;
+package github.grit.gaia.agent.infra.ai.workflow;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
