@@ -24,6 +24,12 @@
             <artifactId>lombok</artifactId>
         </dependency>
 
+        <!-- SLF4J API (required for @Slf4j annotation) -->
+        <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-api</artifactId>
+        </dependency>
+
         <!-- JSON -->
         <dependency>
             <groupId>com.alibaba.fastjson2</groupId>

@@ -8,13 +8,13 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 
 /**
  * 全局异常处理器
- * 
+ *
  * @author Gaia Team
  */
 @Slf4j
 @RestControllerAdvice
 public class GlobalExceptionHandler {
-    
+
     /**
      * 业务异常
      */
@@ -23,7 +23,7 @@ public class GlobalExceptionHandler {
         log.error("业务异常: {}", e.getMessage());
         return Result.of(e.getCode(), e.getMessage(), null);
     }
-    
+
     /**
      * 通用异常
      */
