@@ -3,6 +3,7 @@ package infra.ai;
 import com.alibaba.cloud.ai.dashscope.api.DashScopeApi;
 import com.alibaba.cloud.ai.dashscope.chat.DashScopeChatModel;
 import com.alibaba.cloud.ai.graph.agent.ReactAgent;
+import org.junit.jupiter.api.Test;
 import org.springframework.ai.chat.model.ChatModel;
 import org.springframework.ai.chat.model.ToolContext;
 import org.springframework.ai.tool.ToolCallback;
@@ -12,6 +13,7 @@ import java.util.function.BiFunction;
 
 public class DashScopeTest {
 
+    @Test
     public void test() {
 
         // 创建 DashScope API 实例
@@ -35,6 +37,7 @@ public class DashScopeTest {
                 .tools(searchTool)
                 .model(chatModel)
                 .build();
+
 
     }
 

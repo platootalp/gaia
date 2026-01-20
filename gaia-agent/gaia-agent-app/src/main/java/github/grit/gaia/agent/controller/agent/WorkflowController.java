@@ -1,26 +1,27 @@
 package github.grit.gaia.agent.controller.agent;
 
 import github.grit.gaia.agent.common.response.Result;
-import github.grit.gaia.agent.controller.dto.request.WorkflowExecuteRequest;
-import github.grit.gaia.agent.service.workflow.WorkflowService;
+import github.grit.gaia.agent.controller.dto.WorkflowExecuteRequest;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 /**
  * 工作流控制器
- * 
+ *
  * @author Gaia Team
  */
 @Slf4j
 @RestController
-@RequestMapping("/api/v1/workflow")
+@RequestMapping("/v1/workflow")
 @RequiredArgsConstructor
 public class WorkflowController {
-    
-    private final WorkflowService workflowService;
-    
+
     /**
      * 执行工作流
      */
@@ -30,7 +31,7 @@ public class WorkflowController {
         // TODO: 实现工作流执行
         return Result.success();
     }
-    
+
     /**
      * 获取工作流列表
      */
