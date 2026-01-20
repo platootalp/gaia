@@ -1,0 +1,16 @@
+spring:
+  application:
+    name: gaia-agent
+  profiles:
+    active: local
+  # AI 配置
+  ai:
+    dashscope:
+      api-key: ${DASHSCOPE_API_KEY:your-api-key-here}
+      chat:
+        options:
+          model: qwen3-max-preview
+      image:
+        options:
+          model: wanx-v1
+
