@@ -1,4 +1,4 @@
-package github.grit.gaia.agent.common.response;
+package github.grit.gaia.agent.common.model;
 
 import lombok.Data;
 
