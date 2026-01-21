@@ -90,7 +90,7 @@ public class AgentTest {
         ReActAgent agent = ReActAgent.builder()
                 .chatModel(chatModel)
                 .name("CalculatorAgent")
-                .systemPrompt("你是一个数学助手，擅长使用计算器工具解决数学问题。")
+//                .systemPrompt("你是一个数学助手，擅长使用计算器工具解决数学问题。")
                 .toolManager(toolManager)
                 .maxIterations(5)
                 .build();
