@@ -1,6 +1,6 @@
 package github.grit.gaia.agent.controller.agent;
 
-import github.grit.gaia.agent.common.response.Result;
+import github.grit.gaia.agent.common.model.Result;
 import github.grit.gaia.agent.controller.dto.WorkflowExecuteRequest;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;

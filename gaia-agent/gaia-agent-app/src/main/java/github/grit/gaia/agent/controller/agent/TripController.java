@@ -1,6 +1,6 @@
 package github.grit.gaia.agent.controller.agent;
 
-import github.grit.gaia.agent.common.response.Result;
+import github.grit.gaia.agent.common.model.Result;
 import github.grit.gaia.agent.controller.dto.TripPlanRequest;
 import github.grit.gaia.agent.controller.dto.TripPlanResponse;
 import github.grit.gaia.agent.service.TripService;
