@@ -3,7 +3,6 @@ package infra;
 import org.springframework.boot.SpringBootConfiguration;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.context.annotation.ComponentScan;
-import org.springframework.test.context.ActiveProfiles;
 
 /**
  * 测试配置类
@@ -12,7 +11,6 @@ import org.springframework.test.context.ActiveProfiles;
  * 使用 @SpringBootConfiguration + @EnableAutoConfiguration 来启用 Spring Boot 自动配置
  * 包括 Spring AI 的自动配置，这样 ChatModel 才能被正确注入
  * <p>
- * @ActiveProfiles("local") 激活 application-local.yml 配置文件
  */
 @SpringBootConfiguration
 @EnableAutoConfiguration
