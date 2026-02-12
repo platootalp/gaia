@@ -2,7 +2,6 @@ package github.grit.gaia.agent.infra.ai.agent;
 
 import cn.hutool.core.util.StrUtil;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.ai.chat.client.ChatClient;
 import org.springframework.ai.chat.messages.AssistantMessage;
 import org.springframework.ai.chat.messages.Message;
 import org.springframework.ai.chat.messages.SystemMessage;
@@ -10,8 +9,10 @@ import org.springframework.ai.chat.messages.UserMessage;
 import org.springframework.ai.chat.model.ChatResponse;
 import org.springframework.ai.chat.prompt.Prompt;
 import org.springframework.util.Assert;
+import org.springframework.web.client.RestTemplate;
 import reactor.core.publisher.Flux;
 
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -72,9 +73,6 @@ public class ReActAgent extends Agent {
 
         log.debug("ReActAgent [{}] starting call, maxIterations: {}", name, maxIterations);
 
-        // 创建ChatClient
-        ChatClient chatClient = createChatClient();
-
         // 执行ReAct循环
         List<Message> conversationHistory = new ArrayList<>();
 
@@ -88,36 +86,60 @@ public class ReActAgent extends Agent {
         String userInput = extractUserInput(prompt);
         conversationHistory.add(new UserMessage(userInput));
 
+        ChatResponse lastResponse = null;
+
         // ReAct循环：推理 -> 行动 -> 观察
         for (int iteration = 0; iteration < maxIterations; iteration++) {
             log.debug("ReActAgent [{}] iteration {}/{}", name, iteration + 1, maxIterations);
 
             // 1. Reasoning: 让模型思考下一步
-            ChatResponse response = chatClient.prompt()
-                    .messages(conversationHistory)
-                    .call()
-                    .chatResponse();
+            Prompt currentPrompt = new Prompt(conversationHistory);
+            ChatResponse response = chatModel.call(currentPrompt);
 
             if (response == null || response.getResult() == null) {
                 log.warn("ReActAgent [{}] received null response at iteration {}", name, iteration + 1);
                 break;
             }
+            RestTemplate restTemplate;
+            lastResponse = response;
+            AssistantMessage assistantMessage = response.getResult().getOutput();
+            conversationHistory.add(assistantMessage);
 
-            String assistantResponse = extractContent(response);
-            conversationHistory.add(new AssistantMessage(assistantResponse));
-
+            String assistantResponse = assistantMessage.getText();
             log.debug("ReActAgent [{}] assistant response: {}", name, assistantResponse);
 
-            // 2. 检查是否完成任务（模型返回最终答案）
-            // Spring AI 的 ChatClient 会自动处理工具调用
-            // 如果响应中包含 Final Answer 或没有 Action 关键字，认为任务完成
+            // 2. 检查是否有工具调用
+            List<AssistantMessage.ToolCall> toolCalls = assistantMessage.getToolCalls();
+            if (toolCalls != null && !toolCalls.isEmpty()) {
+                log.debug("ReActAgent [{}] detected {} tool calls", name, toolCalls.size());
+
+                // 执行所有工具调用并收集结果
+                StringBuilder toolResultsBuilder = new StringBuilder();
+                toolResultsBuilder.append("Tool execution results:\n");
+
+                for (AssistantMessage.ToolCall toolCall : toolCalls) {
+                    String toolResult = executeToolCall(toolCall);
+                    toolResultsBuilder.append(String.format("Tool: %s\nResult: %s\n\n",
+                            toolCall.name(), toolResult));
+
+                    log.debug("ReActAgent [{}] tool '{}' executed, result: {}",
+                            name, toolCall.name(), toolResult);
+                }
+
+                // 将工具执行结果作为用户消息添加到对话历史
+                conversationHistory.add(new UserMessage(toolResultsBuilder.toString()));
+
+                // 有工具调用，继续下一轮让模型处理工具结果
+                continue;
+            }
+
+            // 3. 检查是否完成任务（模型返回最终答案）
             if (isTaskComplete(assistantResponse)) {
                 log.info("ReActAgent [{}] task completed at iteration {}", name, iteration + 1);
                 return response;
             }
 
-            // 3. 如果还没完成，继续下一轮迭代
-            // Spring AI 会自动处理工具调用并将结果添加到对话历史中
+            // 4. 如果既没有工具调用也没有完成，继续下一轮迭代
             log.debug("ReActAgent [{}] continuing to next iteration", name);
             /** genAI_master_end */
         }
@@ -126,10 +148,7 @@ public class ReActAgent extends Agent {
         log.warn("ReActAgent [{}] reached max iterations ({})", name, maxIterations);
 
         // 返回最后一次响应
-        return chatClient.prompt()
-                .messages(conversationHistory)
-                .call()
-                .chatResponse();
+        return lastResponse != null ? lastResponse : chatModel.call(new Prompt(conversationHistory));
     }
 
     /**
@@ -145,9 +164,6 @@ public class ReActAgent extends Agent {
 
         log.debug("ReActAgent [{}] starting stream, maxIterations: {}", name, maxIterations);
 
-        // 创建ChatClient
-        ChatClient chatClient = createChatClient();
-
         // 对于流式调用，简化实现：直接流式返回响应
         // 完整的ReAct循环在流式模式下比较复杂，这里先实现基本功能
         List<Message> messages = new ArrayList<>();
@@ -161,28 +177,39 @@ public class ReActAgent extends Agent {
         String userInput = extractUserInput(prompt);
         messages.add(new UserMessage(userInput));
 
-        return chatClient.prompt()
-                .messages(messages)
-                .stream()
-                .chatResponse();
+        Prompt streamPrompt = new Prompt(messages);
+        return chatModel.stream(streamPrompt);
     }
 
     /** genAI_master_start */
     /**
-     * 创建ChatClient
+     * 执行工具调用
      *
-     * @return ChatClient实例
+     * @param toolCall 工具调用请求
+     * @return 工具执行结果
      */
-    private ChatClient createChatClient() {
-        ChatClient.Builder builder = ChatClient.builder(chatModel);
-
-        // 如果有工具管理器，注册工具
-        // 注意：ToolManager需要提供获取工具列表的方法
-        if (toolManager != null) {
-            builder.defaultToolCallbacks(toolManager.getFunctions());
+    private String executeToolCall(AssistantMessage.ToolCall toolCall) {
+        if (toolManager == null) {
+            log.warn("ReActAgent [{}] toolManager is null, cannot execute tool: {}", name, toolCall.name());
+            return "Error: ToolManager not configured";
         }
 
-        return builder.build();
+        try {
+            org.springframework.ai.tool.ToolCallback tool = toolManager.getTool(toolCall.name());
+            if (tool == null) {
+                log.warn("ReActAgent [{}] tool not found: {}", name, toolCall.name());
+                return "Error: Tool not found: " + toolCall.name();
+            }
+
+            // 执行工具调用
+            String result = tool.call(toolCall.arguments());
+            log.info("ReActAgent [{}] tool '{}' executed successfully", name, toolCall.name());
+            return result;
+
+        } catch (Exception e) {
+            log.error("ReActAgent [{}] error executing tool '{}': {}", name, toolCall.name(), e.getMessage(), e);
+            return "Error executing tool: " + e.getMessage();
+        }
     }
 
     /** genAI_master_end */

@@ -31,6 +31,7 @@
     </annotationProcessing>
     <bytecodeTargetLevel>
       <module name="batch-upload" target="1.8" />
+      <module name="gaia" target="17" />
       <module name="gaia-api" target="17" />
       <module name="gaia-work" target="17" />
       <module name="grow-api" target="17" />
