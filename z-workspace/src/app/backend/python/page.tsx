@@ -1,4 +1,3 @@
-/** genAI_master_start */
 'use client'
 
 import { useState } from 'react'
@@ -442,4 +441,3 @@ export default function PythonStack() {
     </div>
   )
 }
-/** genAI_master_end */

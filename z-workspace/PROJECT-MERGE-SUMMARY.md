@@ -231,4 +231,4 @@ bun run dev
 
 **创建时间**: 2025-02-12  
 **项目位置**: `/Users/lijunyi/road/gaia/z-workspace`  
-**技术支持**: Z.ai
+**项目名称**: TechStack Panorama (技术栈全景图)

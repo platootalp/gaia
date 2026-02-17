@@ -1,4 +1,3 @@
-/** genAI_master_start */
 'use client'
 
 import { useState } from 'react'
@@ -517,4 +516,3 @@ export default function NodeJSStack() {
     </div>
   )
 }
-/** genAI_master_end */

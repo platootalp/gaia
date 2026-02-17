@@ -1,4 +1,3 @@
-/** genAI_master_start */
 'use client'
 
 import { useState } from 'react'
@@ -446,4 +445,3 @@ export default function JavaStack() {
     </div>
   )
 }
-/** genAI_master_end */

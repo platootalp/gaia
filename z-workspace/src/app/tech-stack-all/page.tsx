@@ -1,5 +1,3 @@
-/** genAI_master_start */
-'use client'
 
 export default function TechStackAll() {
   // ==================== 前端技术栈 ====================
@@ -375,4 +373,3 @@ export default function TechStackAll() {
     </div>
   )
 }
-/** genAI_master_end */

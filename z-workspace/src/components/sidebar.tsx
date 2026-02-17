@@ -1,10 +1,9 @@
-/** genAI_master_start */
 'use client'
 
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 import { cn } from '@/lib/utils'
-import { Home, Code2, Server, Cpu, Database, Bot, Network } from 'lucide-react'
+import { Home, Code2, Server, Bot, Network } from 'lucide-react'
 
 const routes = [
   {
@@ -20,34 +19,10 @@ const routes = [
     color: 'text-pink-500',
   },
   {
-    label: 'Node.js/TS',
+    label: '后端技术栈',
     icon: Server,
-    href: '/backend/nodejs',
+    href: '/backend',
     color: 'text-green-500',
-  },
-  {
-    label: 'Python',
-    icon: Cpu,
-    href: '/backend/python',
-    color: 'text-yellow-500',
-  },
-  {
-    label: 'Go',
-    icon: Database,
-    href: '/backend/go',
-    color: 'text-cyan-500',
-  },
-  {
-    label: 'Java',
-    icon: Server,
-    href: '/backend/java',
-    color: 'text-orange-500',
-  },
-  {
-    label: 'Rust',
-    icon: Cpu,
-    href: '/backend/rust',
-    color: 'text-red-500',
   },
   {
     label: 'AI开发',
@@ -94,11 +69,10 @@ export function Sidebar() {
       </div>
       <div className="px-3 py-2 flex-shrink-0">
         <div className="px-3 text-xs text-zinc-500">
-          <p>© 2025 Z.ai</p>
+          <p>© 2025 TechStack Panorama</p>
           <p className="mt-1">Powered by Next.js</p>
         </div>
       </div>
     </div>
   )
 }
-/** genAI_master_end */

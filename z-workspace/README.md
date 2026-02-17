@@ -1,4 +1,6 @@
-# 🚀 技术栈全景图 - Z.ai Code Scaffold
+# 🚀 技术栈全景图 (TechStack Panorama)
+
+[![GitHub](https://img.shields.io/badge/GitHub-platootalp/techstack--panorama-blue?logo=github)](https://github.com/platootalp/techstack-panorama)
 
 一个集成了全栈技术栈和前端技术栈展示的现代化Web应用,采用侧边栏导航设计,方便快速切换不同视图。
 
@@ -144,18 +146,10 @@ bun run db:migrate   # 运行迁移
 bun run db:reset     # 重置数据库
 ```
 
-## 🤖 AI 驱动开发
-
-本项目使用 [Z.ai](https://chat.z.ai) 进行开发,享受AI辅助编程的强大能力:
-- 💻 智能代码生成
-- 🎨 UI快速开发
-- 🔧 自动化错误修复
-- 📝 文档自动生成
-
 ## 📝 许可证
 
 MIT License
 
 ---
 
-Built with ❤️ by Z.ai | © 2025
+Built with ❤️ | © 2025 TechStack Panorama | [GitHub Repository](https://github.com/platootalp/techstack-panorama)

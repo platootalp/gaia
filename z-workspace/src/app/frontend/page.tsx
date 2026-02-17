@@ -1,4 +1,3 @@
-/** genAI_master_start */
 'use client'
 
 import { useState } from 'react'
@@ -122,7 +121,7 @@ const techCategories: TechCategory[] = [
     mainstream: [
       { name: 'TypeScript', description: 'JavaScript超集,静态类型检查', popularity: 'high' },
       { name: 'JSDoc', description: '通过注释添加类型提示', popularity: 'medium' },
-      { name: 'Flow', description: 'Facebook的类型检查器', popularity: 'low' },
+      { name: 'Flow', description: 'Facebook的类型检查器', popularity: 'medium' },
     ]
   },
   {
@@ -460,4 +459,3 @@ export default function TechStackFrontend() {
     </div>
   )
 }
-/** genAI_master_end */
