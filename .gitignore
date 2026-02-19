@@ -155,3 +155,9 @@ PROJECT-MERGE-SUMMARY.md
 .eslintcache
 .stylelintcache
 .parcel-cache
+# Java build
+target/
+*.class
+*.jar
+*.war
+
